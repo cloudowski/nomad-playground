@@ -29,7 +29,7 @@ nomad node-status
 nomad status x
 ```
 
-Please see official (https://www.nomadproject.io/intro/getting-started/install.html)[getting started guide] for more details.
+Please see official [getting started guide](https://www.nomadproject.io/intro/getting-started/install.html) for more details.
 
 
 # TODO
