@@ -18,7 +18,22 @@ vagrant up
 
  * There is a job called **x** defined in /vagrant/x.nomad which you can launch for testing - it uses docker to create 2 containers (redis+nginx). You can launch it from the first node (nomad1):
 
+
 ```
 nomad run /vagrant/x.nomad
 ```
 
+Now you can check job and node statuses (from nomad1 only):
+```
+nomad node-status
+nomad status x
+```
+
+Please see official (https://www.nomadproject.io/intro/getting-started/install.html)[getting started guide] for more details.
+
+
+# TODO
+ * Use consul on all 3 VMs
+ * Make some useful service instead of dummy redis and nginx
+ * Divide VMs using region and name datacenters
+ * Use single tmux session with windows
