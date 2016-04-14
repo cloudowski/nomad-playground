@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision :shell, :path => "provision/nomad.sh"
   config.vm.provision :shell, :path => "provision/common.sh"
-  config.vm.provision :shell, :path => "nomad-run.sh"
+  config.vm.provision :shell, :path => "provision/consul.sh"
 
 
   # Increase memory for Virtualbox

@@ -53,6 +53,9 @@ client {
     enabled = true
     servers = ["$srvip:4647"]
     network_interface = "eth1"
+    options {
+	    consul.address = "10.14.14.11:8500"
+    }
 }
 ports {
     http = ${i}5656
