@@ -42,6 +42,7 @@ sleep 3
 if [ $N -eq 1 ];then
 	echo "Running server"
 	tmux new -s server -d "nomad agent -config /tmp/server.hcl \"$opts\""
+#	exit 
 fi
 
 for i in {1..2};do
@@ -49,12 +50,14 @@ for i in {1..2};do
 cat << EOF > /tmp/client${i}.hcl
 log_level = "DEBUG"
 data_dir = "/tmp/client$i"
+enable_debug = true
+name    = "${HOSTNAME}_$i"
 client {
     enabled = true
     servers = ["$srvip:4647"]
     network_interface = "eth1"
     options {
-	    consul.address = "10.14.14.11:8500"
+	    consul.address = "$myip:8500"
     }
 }
 ports {
