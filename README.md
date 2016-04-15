@@ -33,7 +33,6 @@ Please see official [getting started guide](https://www.nomadproject.io/intro/ge
 
 
 # TODO
- * Use consul on all 3 VMs
  * Make some useful service instead of dummy redis and nginx
  * Divide VMs using region and name datacenters
  * Use single tmux session with windows

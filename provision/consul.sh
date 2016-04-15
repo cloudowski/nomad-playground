@@ -36,3 +36,13 @@ create_resources(host, \$servers)
 EOF
 
 puppet apply /tmp/consul.pp
+
+echo "Enabling DNS forwarding"
+apt-get install -y dnsmasq
+cat << EOF > /etc/dnsmasq.d/consul
+server=/consul/127.0.0.1#8600
+EOF
+
+echo "nameserver 127.0.0.1" > /etc/resolv.conf
+
+service dnsmasq restart

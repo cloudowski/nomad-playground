@@ -45,7 +45,7 @@ if [ $N -eq 1 ];then
 #	exit 
 fi
 
-for i in {1..2};do
+for i in {1..1};do
 	echo "Running client $i"
 cat << EOF > /tmp/client${i}.hcl
 log_level = "DEBUG"
@@ -66,5 +66,6 @@ ports {
 EOF
 	rm -fr /tmp/client${i}
 	tmux kill-session -t client${i}
-	tmux new -s client$i -d "nomad agent -config /tmp/client${i}.hcl \"$opts\" -dc=dc$i"
+	#tmux new -s client$i -d "nomad agent -config /tmp/client${i}.hcl \"$opts\" -dc=dc$i"
+	tmux new -s client$i -d "nomad agent -config /tmp/client${i}.hcl \"$opts\""
 done

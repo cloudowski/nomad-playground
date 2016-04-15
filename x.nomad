@@ -6,13 +6,13 @@ job "x" {
 	}
 	update {
 		# Stagger updates every 10 seconds
-		stagger = "10s"
+		stagger = "20s"
 		# Update a single task at a time
 		max_parallel = 1
 	}
 
 	group "cache" {
-		count = 1
+		count = 8
 
 		restart {
 			# The number of attempts to run the job within the specified interval.
@@ -25,7 +25,7 @@ job "x" {
 		task "redis" {
 			driver = "docker"
 			config {
-				image = "redis:3.0"
+				image = "redis:2.8"
 				port_map {
 					db = 6379
 				}
