@@ -12,7 +12,7 @@ job "x" {
 	}
 
 	group "cache" {
-		count = 8
+		count = 12
 
 		restart {
 			# The number of attempts to run the job within the specified interval.
@@ -66,7 +66,7 @@ job "x" {
 			}
 			service {
 				name = "${TASKGROUP}-www"
-				tags = ["global", "www"]
+				tags = ["global", "www", "rest"]
 				port = "www"
 				check {
 					type = "http"

@@ -1,0 +1,6 @@
+#consul = localhost:8500
+template {
+  source = "/vagrant/files/haproxy.ctmpl"
+  destination = "/etc/haproxy/haproxy.cfg"
+  command = "haproxy -f /etc/haproxy/haproxy.cfg -sf $(pidof haproxy) &"
+}

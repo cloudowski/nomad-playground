@@ -43,6 +43,9 @@ if [ $N -eq 1 ];then
 	echo "Running server"
 	tmux new -s server -d "nomad agent -config /tmp/server.hcl \"$opts\""
 #	exit 
+	echo "Running consul-template with haproxy"
+	tmux new -s haproxy -d "consul-template -config /vagrant/files/haproxy.json -consul localhost:8500"
+
 fi
 
 for i in {1..1};do
