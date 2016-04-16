@@ -31,6 +31,10 @@ nomad status x
 
 Please see official [getting started guide](https://www.nomadproject.io/intro/getting-started/install.html) for more details.
 
+## HAProxy load-balancer
+
+On server **nomad2** run.sh also launches consul-template which generates dynamically haproxy config and starts/reloads haproxy. So you can actually test it using url **[http://10.14.14.11/](http://10.14.14.11/)**. You can also see haproxy stats at **[http://10.14.14.11:1936/](http://10.14.14.11:1936/)**.
+
 
 # TODO
  * Make some useful service instead of dummy redis and nginx
