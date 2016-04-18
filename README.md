@@ -10,7 +10,7 @@ Currently it launches 3 VMs using vagrant and installs nomad, consul and haproxy
 vagrant up
 ```
 
- * After vm starts you need to launch manually server and agent nodes. You can do it using the following command from each server (it will launch them in separate tmux sessions):
+ * After vm starts you need to launch manually server and agent nodes. You can do it using the following command from each server (it will launch them in separate tmux sessions) from root:
 
 ```
 /vagrant/run.sh
@@ -22,6 +22,8 @@ vagrant up
 ```
 nomad run /vagrant/x.nomad
 ```
+
+It will take a couple of minutes before containers are ready (they initially download docker images).
 
 
 

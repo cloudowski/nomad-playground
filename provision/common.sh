@@ -11,3 +11,5 @@ set-window-option -g utf8 on
 set-window-option -g xterm-keys on
 
 EOF
+
+cat /root/.tmux.conf >> /etc/tmux.conf
