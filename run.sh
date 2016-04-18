@@ -11,6 +11,7 @@ case $N in
 esac
 region=poland
 
+# use single region for now
 opts="-region=$region"
 myip="10.14.14.1$N"
 srvip="10.14.14.11"
@@ -40,21 +41,20 @@ pkill nomad
 sleep 3
 
 if [ $N -eq 1 ];then
-	echo "Running server"
+	echo "Running Nomad server in tmux session 'server'"
 	tmux new -s server -d "nomad agent -config /tmp/server.hcl \"$opts\""
 #	exit 
-	echo "Running consul-template with haproxy"
+	echo "Running consul-template with haproxy in tmux session 'haproxy'"
 	tmux new -s haproxy -d "consul-template -config /vagrant/files/haproxy.json -consul localhost:8500"
 
 fi
 
-for i in {1..1};do
-	echo "Running client $i"
-cat << EOF > /tmp/client${i}.hcl
+echo "Running Nomad client in tmux session 'client'"
+cat << EOF > /tmp/client.hcl
 log_level = "DEBUG"
-data_dir = "/tmp/client$i"
+data_dir = "/tmp/client"
 enable_debug = true
-name    = "${HOSTNAME}_$i"
+name    = "${HOSTNAME}"
 client {
     enabled = true
     servers = ["$srvip:4647"]
@@ -64,11 +64,10 @@ client {
     }
 }
 ports {
-    http = ${i}5656
+    http = 5656
 }
 EOF
-	rm -fr /tmp/client${i}
-	tmux kill-session -t client${i}
-	#tmux new -s client$i -d "nomad agent -config /tmp/client${i}.hcl \"$opts\" -dc=dc$i"
-	tmux new -s client$i -d "nomad agent -config /tmp/client${i}.hcl \"$opts\""
-done
+rm -fr /tmp/client${i}
+tmux kill-session -t client${i}
+#tmux new -s client$i -d "nomad agent -config /tmp/client${i}.hcl \"$opts\" -dc=dc$i"
+tmux new -s client$i -d "nomad agent -config /tmp/client.hcl \"$opts\""
