@@ -16,7 +16,7 @@ vagrant up
 /vagrant/run.sh
 ```
 
- * There is a job called **x** defined in /vagrant/x.nomad which you can launch for testing - it uses docker to create 2 containers (redis+nginx). You can launch it from the first node *(nomad1)*:
+ * There is a job called **x** defined in /vagrant/x.nomad which you can launch for testing - it uses docker to create 2 containers (redis+gcr.io/google_containers/serve_hostname). You can launch it from the first node *(nomad1)*:
 
 
 ```
@@ -48,7 +48,6 @@ You can shutdown one machine to check how it responds by observing [Consul](http
 Please see official [getting started guide](https://www.nomadproject.io/intro/getting-started/install.html) for more details.
 
 # TODO
- * Make some useful service instead of dummy redis and nginx
  * Use single tmux session with windows
  * Set up Nomad server cluster
  * Start services automatically (get rid off run.sh)

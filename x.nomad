@@ -59,9 +59,9 @@ job "x" {
 
 			# Configure Docker driver with the image
 			config {
-				image = "nginx:latest"
+				image = "gcr.io/google_containers/serve_hostname:1.1"
 				port_map {
-					www = 80
+					www = 9376
 				}
 			}
 			service {
