@@ -1,5 +1,6 @@
 job "x" {
 	datacenters = ["dc1"]
+	region = "poland"
 	constraint {
 		attribute = "${attr.kernel.name}"
 		value = "linux"
