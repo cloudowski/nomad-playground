@@ -5,8 +5,8 @@ global
   stats  socket /var/lib/haproxy/stats
   user  haproxy
   maxconn {{with $maxconn:=key "service/haproxy/maxconn"}}{{$maxconn}}{{else}}4096{{end}}
-  log 127.0.0.1   local0
-  log 127.0.0.1   local1 notice
+  log /dev/log    local0
+  log /dev/log    local1 notice
 
 defaults
   log  global
@@ -21,13 +21,9 @@ defaults
   timeout  server 1m
   timeout  check 10s
 
-listen nomad
-  bind 0.0.0.0:80 
-  balance roundrobin
-  option tcplog
-
 frontend http-in
     bind *:80{{range $i,$a:=services}}{{$path:=.Name}}{{range .Tags}}{{if eq . "www"}}
+    balance roundrobin
     default_backend nginx
 
 backend nginx
