@@ -11,12 +11,28 @@ Vagrant.configure(2) do |config|
     config.vm.define "nomad#{n}", autostart: true do |host|
         host.vm.network :private_network, :ip => "10.14.14.1#{n}"
         host.vm.hostname = "nomad#{n}"
+        host.vm.provision :shell, :path => "provision/consul.sh", :args => [ 'pl', 'dc1' ]
+    end
+  end
+
+  (4..5).each do |n|
+    config.vm.define "nomad#{n}", autostart: true do |host|
+        host.vm.network :private_network, :ip => "10.14.14.1#{n}"
+        host.vm.hostname = "nomad#{n}"
+        host.vm.provision :shell, :path => "provision/consul.sh", :args => [ 'pl', 'dc2' ]
+    end
+  end
+
+  (6..7).each do |n|
+    config.vm.define "nomad#{n}", autostart: false do |host|
+        host.vm.network :private_network, :ip => "10.14.14.1#{n}"
+        host.vm.hostname = "nomad#{n}"
+        host.vm.provision :shell, :path => "provision/consul.sh", :args => [ 'us', 'dc3' ]
     end
   end
 
   config.vm.provision :shell, :path => "provision/nomad.sh"
   config.vm.provision :shell, :path => "provision/common.sh"
-  config.vm.provision :shell, :path => "provision/consul.sh"
   config.vm.provision :shell, :path => "provision/haproxy.sh"
 
 
