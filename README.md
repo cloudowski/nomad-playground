@@ -16,11 +16,11 @@ vagrant up
 /vagrant/run.sh
 ```
 
- * There is a job called **x** defined in /vagrant/x.nomad which you can launch for testing - it uses docker to create 2 containers (redis+gcr.io/google_containers/serve_hostname). You can launch it from the first node *(nomad1)*:
+ * There is a job called **job1** defined in /vagrant/jobs/job1.hcl which you can launch for testing - it uses docker to create 2 containers (redis+gcr.io/google_containers/serve_hostname). You can launch it from the first node *(nomad1)*:
 
 
 ```
-nomad run /vagrant/x.nomad
+nomad run /vagrant/jobs/job1.hcl
 ```
 
 It will take a couple of minutes before containers are ready (they initially download docker images).
@@ -31,7 +31,7 @@ It will take a couple of minutes before containers are ready (they initially dow
 Now you can check job and node statuses (from nomad1 only):
 ```
 nomad node-status
-nomad status x
+nomad status job1
 ```
 
 ## Check consul

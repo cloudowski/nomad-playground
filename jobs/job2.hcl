@@ -1,18 +1,18 @@
-job "x" {
-	datacenters = ["dc1", "dc2"]
-	region = "pl"
+job "job2" {
+	datacenters = ["dc3"]
+	region = "us"
 	constraint {
 		attribute = "${attr.kernel.name}"
 		value = "linux"
 	}
 	update {
 		# Stagger updates every 10 seconds
-		stagger = "20s"
+		stagger = "5s"
 		# Update a single task at a time
 		max_parallel = 1
 	}
 
-	group "cache" {
+	group "web" {
 		count = 12
 
 		restart {
@@ -22,36 +22,6 @@ job "x" {
 			# A delay between a task failing and a restart occurring.
 			delay = "25s"
 			mode = "delay"
-		}
-		task "redis" {
-			driver = "docker"
-			config {
-				image = "redis:2.8"
-				port_map {
-					db = 6379
-				}
-			}
-
-			service {
-				name = "${TASKGROUP}-redis"
-				tags = ["global", "cache"]
-				port = "db"
-				check {
-					type = "tcp"
-					interval = "10s"
-					timeout = "2s"
-				}
-			}
-			resources {
-				cpu = 200 # 500 Mhz
-				memory = 128 # 256MB
-				network {
-					mbits = 10
-					port "db" {
-					}
-				}
-			}
-
 		}
 		# Define a task to run
 		task "nginx" {
