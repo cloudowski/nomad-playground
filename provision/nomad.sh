@@ -10,7 +10,7 @@ cd /tmp/
 curl -sSL https://releases.hashicorp.com/nomad/0.4.1/nomad_0.4.1_linux_amd64.zip -o nomad.zip
 
 echo Installing Nomad...
-unzip nomad.zip
+unzip -u nomad.zip
 sudo chmod +x nomad
 sudo mv nomad /usr/bin/nomad
 

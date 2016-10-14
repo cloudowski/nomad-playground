@@ -2,10 +2,8 @@
 
 export LC_ALL=C
 
-REGION=$1
-DC=$2
-[ "$REGION" ] || REGION="pl"
-[ "$DC" ] || DC="dc1"
+. /vagrant/provision/options.sh
+
 
 puppet module install KyleAnderson-consul
 
@@ -30,7 +28,7 @@ class { '::consul':
     'enable_syslog'   => true,
 EOF
 
-case $DC in
+case $dc in
   dc1)
 cat << EOF >> /tmp/consul.pp
     'start_join'   => ['10.14.14.11', '10.14.14.12', '10.14.14.13'],
@@ -54,7 +52,19 @@ cat << EOF >> /tmp/consul.pp
 \$servers = { 
 	'nomad4' => { 'ip' => '10.14.14.14' },
 	'nomad5' => { 'ip' => '10.14.14.15' },
+}
+create_resources(host, \$servers)
+EOF
+;;
+  dc3)
+cat << EOF >> /tmp/consul.pp
+    'start_join'   => ['10.14.14.16', '10.14.14.17'],
+    'retry_join'   => ['10.14.14.16', '10.14.14.17'],
+  }
+}
+\$servers = { 
 	'nomad6' => { 'ip' => '10.14.14.16' },
+	'nomad7' => { 'ip' => '10.14.14.17' },
 }
 create_resources(host, \$servers)
 EOF

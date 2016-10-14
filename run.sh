@@ -1,24 +1,13 @@
 #!/bin/bash
 
-N=${HOSTNAME##nomad}
+. /vagrant/provision/options.sh
 
-#dc="dc$N"
-# default region
-dc=dc1
-[ $N -ge 4 ] && dc=dc2
-
-case $N in
-	1) region=pl;;
-	2) region=us;;
-esac
-
-# use single region for now
-region=pl
 opts="-region=$region"
-myip="10.14.14.1$N"
-srvip="10.14.14.11"
 
 [ "$dc" = "dc1" ] && bootstrap_opt="bootstrap_expect = 1"
+[ "$region" = "us" ] && bootstrap_opt="bootstrap_expect = 1"
+retry_join='"10.14.14.11", "10.14.14.14"'
+[ "$region" = 'us' ] && retry_join='"10.14.14.16"'
 
 
 cat << EOF > /tmp/server.hcl
@@ -35,7 +24,7 @@ advertise {
 server {
     enabled = true
     $bootstrap_opt
-    retry_join = ["10.14.14.11", "10.14.14.14"]
+    retry_join = [ $retry_join ]
 }
 EOF
 #rm -fr /tmp/server
@@ -44,10 +33,11 @@ tmux kill-session -t server
 pkill nomad
 sleep 3
 
-if [ $N -eq 1 -o $N -eq 4 ];then
+if [ $run_nomad_server = "y" ];then
+	rm -fr /tmp/server
 	echo "Running Nomad server in tmux session 'server'"
 	tmux new -s server -d "nomad agent -config /tmp/server.hcl \"$opts\" -dc=$dc" 
-#	exit 
+
 	echo "Running consul-template with haproxy in tmux session 'haproxy'"
 	tmux new -s haproxy -d "consul-template -config /vagrant/files/haproxy.json -consul localhost:8500"
 
