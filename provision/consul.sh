@@ -7,7 +7,7 @@ export LC_ALL=C
 
 puppet module install KyleAnderson-consul
 
-if [ $HOSTNAME = "nomad1" ];then
+if [ $run_nomad_server = "y" ];then
 	bootstrap="'bootstrap_expect' => 1,"
 fi
 
@@ -29,7 +29,7 @@ class { '::consul':
     $bootstrap
     'client_addr'      => '0.0.0.0',
     'data_dir'         => '/opt/consul',
-    'datacenter'       => 'east-aws',
+    'datacenter'       => '$dc',
     'log_level'        => 'debug',
     'node_name'        => \$::hostname,
     'server'           => true,
@@ -61,7 +61,6 @@ cat << EOF >> /tmp/consul.pp
     'retry_join'   => ['10.24.14.16', '10.24.14.17'],
   }
 }
-create_resources(host, \$servers)
 EOF
 ;;
 esac
