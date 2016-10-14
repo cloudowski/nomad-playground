@@ -13,6 +13,16 @@ fi
 
 
 cat << EOF > /tmp/consul.pp
+\$servers = { 
+	'nomad1' => { 'ip' => '10.14.14.11' },
+	'nomad2' => { 'ip' => '10.14.14.12' },
+	'nomad3' => { 'ip' => '10.14.14.13' },
+	'nomad4' => { 'ip' => '10.14.14.14' },
+	'nomad5' => { 'ip' => '10.14.14.15' },
+	'nomad6' => { 'ip' => '10.24.14.16' },
+	'nomad7' => { 'ip' => '10.24.14.17' },
+}
+create_resources(host, \$servers)
 class { '::consul':
   version     => '0.6.4',
   config_hash => {
@@ -35,12 +45,6 @@ cat << EOF >> /tmp/consul.pp
     'retry_join'   => ['10.14.14.11', '10.14.14.12', '10.14.14.13'],
   }
 }
-\$servers = { 
-	'nomad1' => { 'ip' => '10.14.14.11' },
-	'nomad2' => { 'ip' => '10.14.14.12' },
-	'nomad3' => { 'ip' => '10.14.14.13' },
-}
-create_resources(host, \$servers)
 EOF
   ;;
   dc2)
@@ -49,22 +53,13 @@ cat << EOF >> /tmp/consul.pp
     'retry_join'   => ['10.14.14.14', '10.14.14.15', '10.14.14.16'],
   }
 }
-\$servers = { 
-	'nomad4' => { 'ip' => '10.14.14.14' },
-	'nomad5' => { 'ip' => '10.14.14.15' },
-}
-create_resources(host, \$servers)
 EOF
 ;;
   dc3)
 cat << EOF >> /tmp/consul.pp
-    'start_join'   => ['10.14.14.16', '10.14.14.17'],
-    'retry_join'   => ['10.14.14.16', '10.14.14.17'],
+    'start_join'   => ['10.24.14.16', '10.24.14.17'],
+    'retry_join'   => ['10.24.14.16', '10.24.14.17'],
   }
-}
-\$servers = { 
-	'nomad6' => { 'ip' => '10.14.14.16' },
-	'nomad7' => { 'ip' => '10.14.14.17' },
 }
 create_resources(host, \$servers)
 EOF

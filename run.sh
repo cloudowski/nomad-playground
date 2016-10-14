@@ -7,7 +7,7 @@ opts="-region=$region"
 [ "$dc" = "dc1" ] && bootstrap_opt="bootstrap_expect = 1"
 [ "$region" = "us" ] && bootstrap_opt="bootstrap_expect = 1"
 retry_join='"10.14.14.11", "10.14.14.14"'
-[ "$region" = 'us' ] && retry_join='"10.14.14.16"'
+[ "$region" = 'us' ] && retry_join='"10.24.14.16"'
 
 
 cat << EOF > /tmp/server.hcl

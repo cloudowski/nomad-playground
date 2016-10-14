@@ -7,23 +7,18 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "docker" # Just install it
 
-  (1..3).each do |n|
+  # pl region hosts
+  (1..5).each do |n|
     config.vm.define "nomad#{n}", autostart: true do |host|
         host.vm.network :private_network, :ip => "10.14.14.1#{n}"
         host.vm.hostname = "nomad#{n}"
     end
   end
 
-  (4..5).each do |n|
-    config.vm.define "nomad#{n}", autostart: true do |host|
-        host.vm.network :private_network, :ip => "10.14.14.1#{n}"
-        host.vm.hostname = "nomad#{n}"
-    end
-  end
-
+  # us regin hosts
   (6..7).each do |n|
     config.vm.define "nomad#{n}", autostart: false do |host|
-        host.vm.network :private_network, :ip => "10.14.14.1#{n}"
+        host.vm.network :private_network, :ip => "10.24.14.1#{n}"
         host.vm.hostname = "nomad#{n}"
     end
   end

@@ -25,7 +25,7 @@ esac
 case $N in
   1|2|3) srvip=10.14.14.11;;
   4|5) srvip=10.14.14.14;;
-  6|7) srvip=10.14.14.16;;
+  6|7) srvip=10.24.14.16;;
 esac
 
 # am i a server?
@@ -35,5 +35,8 @@ case $N in
 esac
 
 # set ip
-myip="10.14.14.1$N"
+case $region in
+  pl) myip="10.14.14.1$N";;
+  us) myip="10.24.14.1$N";;
+esac
 
