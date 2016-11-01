@@ -1,15 +1,21 @@
 # Overview
 This configuration is for testing nomad configuration with example jobs. I used it for playing around with Nomad and check its features.
-Currently it launches 3 VMs using vagrant and installs nomad, consul and haproxy.
+Currently it launches 7 VMs using vagrant and installs nomad, consul and haproxy.
 
 # Quick start
+## Lab overview
+![diagram](files/nomad-playground-diagram.png)
+
+There are 7 machines available in the lab distributed among 2 regions: us and pl. In region **pl** there are two datacenters (dc1 and dc2) and in **us** there is a single dc. In each dc there is a single server running.
+
+
 ## Launch
  * Start virtual machines:
 
 ```
 vagrant up
 ```
-
+ * This will launch servers nomad1 to nomad5. To launch servers in us region please specify their names as command line optiion (vagrant up nomad6 nomad7)
  * After vm starts you need to launch manually server and agent nodes. You can do it using the following command from each server (it will launch them in separate tmux sessions) from root:
 
 ```
