@@ -56,4 +56,4 @@ Please see official [getting started guide](https://www.nomadproject.io/intro/ge
 # TODO
  * Use single tmux session with windows
  * Set up Nomad server cluster
- * Start services automatically (get rid off run.sh)
+ * Start services automatically (get rid of run.sh)
