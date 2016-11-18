@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import urllib
+import urllib2
 import os
 import time
+import socket
 
 stats = {}
 
@@ -17,8 +18,11 @@ def update_stats(k):
     stats[k] = 1
 
 while True:
-  f1 = urllib.urlopen("http://10.14.14.11")
-  f2 = urllib.urlopen("http://10.14.14.14")
+  try:
+    f1 = urllib2.urlopen("http://10.14.14.11", timeout=1)
+    f2 = urllib2.urlopen("http://10.14.14.14", timeout=1)
+  except (socket.timeout, urllib2.HTTPError):
+    continue
   time.sleep(0.1)
   update_stats(f1.read().strip())
   update_stats(f2.read().strip())
