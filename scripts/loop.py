@@ -17,8 +17,10 @@ def update_stats(k):
     stats[k] = 1
 
 while True:
-  f = urllib.urlopen("http://nomad1")
-  update_stats(f.read().strip())
-  if int(time.time()) % 3 == 0:
-    os.system("clear")
-    print_stats()
+  f1 = urllib.urlopen("http://10.14.14.11")
+  f2 = urllib.urlopen("http://10.14.14.14")
+  time.sleep(0.1)
+  update_stats(f1.read().strip())
+  update_stats(f2.read().strip())
+  os.system("clear")
+  print_stats()
