@@ -8,8 +8,11 @@ import socket
 stats = {}
 
 def print_stats():
-  for k,v in stats.items():
-    print "%s: %s" % (k,v)
+  i = 1
+  #for k,v in stats.items():
+  for k,v in sorted(stats.items(), key=lambda x: x[1]):
+    print "%2s. %s: %s" % (i, k, v)
+    i += 1
 
 def update_stats(k):
   if k in stats:
