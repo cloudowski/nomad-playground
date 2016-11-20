@@ -22,16 +22,17 @@ def update_stats(k):
 
 while True:
   try:
-    for h in ('10.14.14.11', '10.14.14.14', '10.24.14.16'):
+    #for h in ('10.14.14.11', '10.14.14.14', '10.24.14.16'):
+    for h in ('10.14.14.11', '10.14.14.14'):
       try:
         f = urllib2.urlopen("http://%s" % h, timeout=1)
       except (socket.timeout, urllib2.HTTPError):
         print "%s failed" % h
         raise Exception
+      update_stats(f.read().strip())
   except Exception:
     continue
   
   time.sleep(0.1)
-  update_stats(f.read().strip())
   os.system("clear")
   print_stats()
